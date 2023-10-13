@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Log Reports</title>
+</head>
+<body>
+    <h1>Log Reports</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody id="logTable">
+        </tbody>
+    </table>
+    <script>
+        fetch('/api/logs?type=INFO')
+            .then(response => response.json())
+            .then(data => {
+                const logTable = document.getElementById('logTable');
+                data.forEach(log => {
+                    const row = logTable.insertRow();
+                    row.insertCell(0).textContent = log.type;
+                    row.insertCell(1).textContent = log.message;
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching log data:', error);
+            });
+    </script>
+</body>
+</html>
